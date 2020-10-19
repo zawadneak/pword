@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../widgets/homeButton.dart';
 
-class Home extends StatelessWidget {
-  Function handleClick() {
-    print("oi");
-  }
-
+class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    void handleGenerator() {
+      Navigator.pushNamed(context, '/password');
+    }
+
+    void handleSafe() {
+      Navigator.pushNamed(context, '/safe');
+    }
+
+    void handleSettings() {
+      Navigator.pushNamed(context, '/settings');
+    }
+
     return Scaffold(
         body: Center(
             child: Column(
@@ -19,25 +28,10 @@ class Home extends StatelessWidget {
           padding: EdgeInsets.all(50.0),
           child: null,
         ),
+        HomeButton("Generator", "blue", handleGenerator),
+        HomeButton("Safe", "green", handleSafe),
         RaisedButton(
-          onPressed: handleClick,
-          child: Container(
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [Text('oi'), Text('oi')],
-              ),
-            ),
-            width: 400.0,
-            height: 200.0,
-          ),
-        ),
-        RaisedButton(
-          onPressed: null,
-          child: Text("Safe"),
-        ),
-        RaisedButton(
-          onPressed: null,
+          onPressed: handleSettings,
           child: Text("Settings"),
         ),
         Padding(

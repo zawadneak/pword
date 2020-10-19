@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import './pages/home.dart';
+import './pages/password.dart';
+import './pages/safe.dart';
+import './pages/settings.dart';
 
 void main() {
   runApp(App());
@@ -10,8 +13,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Main(),
+        '/password': (context) => Password(),
+        '/safe': (context) => Safe(),
+        '/settings': (context) => Settings(),
+      },
       title: 'pword',
-      home: Home(),
     );
   }
 }
