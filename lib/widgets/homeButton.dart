@@ -21,7 +21,10 @@ class HomeButton extends StatelessWidget {
               children: [
                 Text(
                   '$text',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                      fontSize: 24.0),
                 )
               ],
             ),

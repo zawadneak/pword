@@ -22,7 +22,10 @@ class Main extends StatelessWidget {
             child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text("Welcome to PWORD"),
+        Text(
+          "Welcome to PWORD",
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 21.0),
+        ),
         Text("your password manager & generator"),
         Padding(
           padding: EdgeInsets.all(50.0),
