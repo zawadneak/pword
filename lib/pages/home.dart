@@ -31,11 +31,18 @@ class Main extends StatelessWidget {
           padding: EdgeInsets.all(50.0),
           child: null,
         ),
-        HomeButton("Generator", "blue", handleGenerator),
-        HomeButton("Safe", "green", handleSafe),
-        RaisedButton(
-          onPressed: handleSettings,
-          child: Text("Settings"),
+        HomeButton("Generator", "green", handleGenerator),
+        HomeButton("Safe", "blue", handleSafe),
+        Container(
+          child: RaisedButton(
+            onPressed: handleSettings,
+            child: Text(
+              "Settings",
+            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          ),
+          width: 200.0,
         ),
         Padding(
           padding: EdgeInsets.all(50.0),
