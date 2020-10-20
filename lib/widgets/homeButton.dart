@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants/colors.dart';
 
 class HomeButton extends StatelessWidget {
   final String text;
@@ -7,16 +8,13 @@ class HomeButton extends StatelessWidget {
 
   HomeButton(this.text, this.colorType, this.handleClick);
 
-  static const blue = Color.fromRGBO(125, 191, 212, 1);
-  static const green = Color.fromRGBO(122, 210, 204, 1);
-
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
-      child: RaisedButton(
+      child: FlatButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        color: this.colorType == 'blue' ? blue : green,
+        color: this.colorType == 'blue' ? Constants.blue : Constants.green,
         onPressed: handleClick,
         child: Container(
           child: Center(
