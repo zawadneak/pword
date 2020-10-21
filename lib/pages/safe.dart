@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/safeBox.dart';
 
 class Safe extends StatefulWidget {
   @override
@@ -14,10 +15,18 @@ class SafeState extends State<Safe> {
 
     return Scaffold(
         body: Center(
-      child: RaisedButton(
-        onPressed: handleGoBack,
-        child: Text('Voltar'),
-      ),
-    ));
+            child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Password Safe",
+          style: TextStyle(
+              fontFamily: "OpenSans",
+              fontWeight: FontWeight.w700,
+              fontSize: 21.0),
+        ),
+        SafeBox("Apple", "123")
+      ],
+    )));
   }
 }
