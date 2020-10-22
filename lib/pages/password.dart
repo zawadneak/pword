@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:clipboard/clipboard.dart';
+import 'package:flutter/services.dart';
+import 'package:password_strength/password_strength.dart';
 import 'dart:math';
 import '../constants/colors.dart';
 import '../constants/passwordChars.dart';
 import '../widgets/checkBox.dart';
 import '../widgets/generalButton.dart';
 import '../widgets/Alert.dart';
+
+import './safe.dart';
 
 class Password extends StatefulWidget {
   @override
@@ -18,13 +21,14 @@ class PasswordState extends State<Password> {
     CheckBoxModel(text: "Lowercase letters"),
     CheckBoxModel(text: "Symbols"),
     CheckBoxModel(text: "Numbers"),
-    CheckBoxModel(text: "Use common words"),
+    CheckBoxModel(text: "Use noun"),
   ];
 
   double passwordLength = 10;
   double strength = 0.3;
   bool isGenerated = false;
-  String password = "";
+  String currentPassword = "";
+  String description = "";
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +36,9 @@ class PasswordState extends State<Password> {
       Navigator.pop(context);
     }
 
-    void handleSave() {
-      Navigator.pushNamed(context, '/safe');
-    }
-
     int printableSliderValue = passwordLength.round();
 
-    int generateRandomString() {
-      final random = Random();
+    List getCharArray() {
       var charArray = [];
       if (options[0].checked) {
         charArray.add(PasswordChars.uppercase);
@@ -54,6 +53,14 @@ class PasswordState extends State<Password> {
         charArray.add(PasswordChars.numbers);
       }
 
+      return charArray;
+    }
+
+    int generateRandomString() {
+      final random = Random();
+
+      final charArray = getCharArray();
+
       if (charArray.isEmpty ?? true) {
         Alert().alert(context,
             "You need to select at least one option besides use common words!");
@@ -64,22 +71,25 @@ class PasswordState extends State<Password> {
       final generatedPassword = List.generate(printableSliderValue,
           (index) => charString[random.nextInt(charString.length)]).join();
 
-      bool commonWordUsed = false;
-      String commonWordPassword = "";
-
       if (options[4].checked) {
-        final index = random.nextInt(PasswordChars.commonWords.length);
-        final commonWord = PasswordChars.commonWords[index];
+        final index = random.nextInt(PasswordChars.randomNouns.length);
+        final noun = PasswordChars.randomNouns[index];
+        String nounPassword;
+        nounPassword = generatedPassword.replaceRange(0, noun.length, noun);
+
+        final estimateStrenght = estimatePasswordStrength(nounPassword);
 
         setState(() {
-          commonWordUsed = true;
-          commonWordPassword =
-              generatedPassword.replaceRange(0, commonWord.length, commonWord);
+          currentPassword = nounPassword;
+          strength = estimateStrenght;
         });
+
+        return 0;
       }
 
       setState(() {
-        password = commonWordUsed ? commonWordPassword : generatedPassword;
+        currentPassword = generatedPassword;
+        strength = estimatePasswordStrength(generatedPassword);
       });
       return 0;
     }
@@ -95,7 +105,14 @@ class PasswordState extends State<Password> {
     }
 
     void handleCopy() {
-      FlutterClipboard.copy(password);
+      Clipboard.setData(ClipboardData(text: currentPassword));
+      Alert().alert(
+          context, "Password copied to clipboard! Thank you for using pword.");
+    }
+
+    void handleSave() {
+      Navigator.pushNamed(context, '/safe',
+          arguments: SafeItem(currentPassword, description));
     }
 
     return Scaffold(
@@ -121,7 +138,7 @@ class PasswordState extends State<Password> {
                         ),
                         height: 320.0,
                       )),
-                      Text("Max Length: $printableSliderValue",
+                      Text("Password Length: $printableSliderValue",
                           style: TextStyle(
                               fontFamily: "OpenSans", fontSize: 14.0)),
                       Slider(
@@ -142,7 +159,7 @@ class PasswordState extends State<Password> {
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                        Text(password,
+                        Text(currentPassword,
                             style: TextStyle(
                                 fontFamily: "Montserrat", fontSize: 21.0)),
                         Container(
@@ -154,18 +171,38 @@ class PasswordState extends State<Password> {
                             child: LinearProgressIndicator(
                               value: strength,
                               valueColor: new AlwaysStoppedAnimation<Color>(
-                                  Color(0xff00ff00)),
+                                strength > 0.7
+                                    ? Color(0xff00ff00)
+                                    : strength > 0.5
+                                        ? Colors.orange
+                                        : Colors.red,
+                              ),
                               backgroundColor: Color(0xffD6D6D6),
                             ),
                           ),
                         ),
                         Text('Strength'),
                         Text(
-                          'weak',
+                          strength > 0.7
+                              ? "strong"
+                              : strength > 0.5
+                                  ? "average"
+                                  : "weak",
                           style: TextStyle(
                               fontFamily: "Montserrat",
-                              color: Colors.red,
+                              color: strength > 0.7
+                                  ? Color(0xff00ff00)
+                                  : strength > 0.5
+                                      ? Colors.orange
+                                      : Colors.red,
                               fontSize: 24.0),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          strength < 0.7
+                              ? "To increase the score, select more\noptions at the generation menu."
+                              : "",
+                          textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 10),
                         GeneralButton("Copy", handleCopy),
