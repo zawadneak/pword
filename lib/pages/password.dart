@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:clipboard/clipboard.dart';
+import 'dart:math';
 import '../constants/colors.dart';
+import '../constants/passwordChars.dart';
 import '../widgets/checkBox.dart';
 import '../widgets/generalButton.dart';
+import '../widgets/Alert.dart';
 
 class Password extends StatefulWidget {
   @override
@@ -17,16 +21,10 @@ class PasswordState extends State<Password> {
     CheckBoxModel(text: "Use common words"),
   ];
 
-  double sliderValue = 10;
+  double passwordLength = 10;
   double strength = 0.3;
   bool isGenerated = false;
   String password = "";
-
-  void handleGenerate() {
-    setState(() {
-      isGenerated = !isGenerated;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +36,67 @@ class PasswordState extends State<Password> {
       Navigator.pushNamed(context, '/safe');
     }
 
-    int printableSliderValue = sliderValue.round();
+    int printableSliderValue = passwordLength.round();
+
+    int generateRandomString() {
+      final random = Random();
+      var charArray = [];
+      if (options[0].checked) {
+        charArray.add(PasswordChars.uppercase);
+      }
+      if (options[1].checked) {
+        charArray.add(PasswordChars.lowercase);
+      }
+      if (options[2].checked) {
+        charArray.add(PasswordChars.symbols);
+      }
+      if (options[3].checked) {
+        charArray.add(PasswordChars.numbers);
+      }
+
+      if (charArray.isEmpty ?? true) {
+        Alert().alert(context,
+            "You need to select at least one option besides use common words!");
+        return 1;
+      }
+      final charString = charArray.join();
+
+      final generatedPassword = List.generate(printableSliderValue,
+          (index) => charString[random.nextInt(charString.length)]).join();
+
+      bool commonWordUsed = false;
+      String commonWordPassword = "";
+
+      if (options[4].checked) {
+        final index = random.nextInt(PasswordChars.commonWords.length);
+        final commonWord = PasswordChars.commonWords[index];
+
+        setState(() {
+          commonWordUsed = true;
+          commonWordPassword =
+              generatedPassword.replaceRange(0, commonWord.length, commonWord);
+        });
+      }
+
+      setState(() {
+        password = commonWordUsed ? commonWordPassword : generatedPassword;
+      });
+      return 0;
+    }
+
+    void handleGenerate() {
+      final resultInt = generateRandomString();
+
+      if (resultInt == 0) {
+        setState(() {
+          isGenerated = !isGenerated;
+        });
+      }
+    }
+
+    void handleCopy() {
+      FlutterClipboard.copy(password);
+    }
 
     return Scaffold(
         body: Center(
@@ -67,7 +125,7 @@ class PasswordState extends State<Password> {
                           style: TextStyle(
                               fontFamily: "OpenSans", fontSize: 14.0)),
                       Slider(
-                          value: sliderValue,
+                          value: passwordLength,
                           min: 10,
                           max: 25,
                           divisions: 3,
@@ -75,7 +133,7 @@ class PasswordState extends State<Password> {
                           inactiveColor: Colors.grey,
                           onChanged: (double value) {
                             setState(() {
-                              sliderValue = value;
+                              passwordLength = value;
                             });
                           }),
                       GeneralButton("Generate", handleGenerate)
@@ -84,7 +142,7 @@ class PasswordState extends State<Password> {
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                        Text('asdasdasdasdasdasdasdasda',
+                        Text(password,
                             style: TextStyle(
                                 fontFamily: "Montserrat", fontSize: 21.0)),
                         Container(
@@ -110,7 +168,7 @@ class PasswordState extends State<Password> {
                               fontSize: 24.0),
                         ),
                         SizedBox(height: 10),
-                        GeneralButton("Copy", handleGenerate),
+                        GeneralButton("Copy", handleCopy),
                         SizedBox(height: 10),
                         GeneralButton("Save", handleSave)
                       ])));
