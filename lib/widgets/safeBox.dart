@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pword/constants/colors.dart';
+import './Alert.dart';
 
 class SafeBox extends StatefulWidget {
   final String description;
   final String password;
+  final Function handleDelete;
 
-  SafeBox(this.description, this.password);
+  SafeBox(this.description, this.password, this.handleDelete);
 
   @override
   SafeBoxWidget createState() => SafeBoxWidget();
@@ -18,6 +21,12 @@ class SafeBoxWidget extends State<SafeBox> {
     setState(() {
       hidden = !hidden;
     });
+  }
+
+  void handleCopy() {
+    Clipboard.setData(ClipboardData(text: widget.password));
+    Alert().alert(
+        context, "Password copied to clipboard! Thank you for using pword.");
   }
 
   @override
@@ -76,7 +85,7 @@ class SafeBoxWidget extends State<SafeBox> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () => print('oi'),
+                  onTap: widget.handleDelete,
                   child: Icon(Icons.delete,
                       size: 30, color: Color.fromRGBO(196, 196, 196, 1)),
                 ),
@@ -88,7 +97,7 @@ class SafeBoxWidget extends State<SafeBox> {
                 ),
                 SizedBox(height: 5),
                 GestureDetector(
-                  onTap: () => print('oi'),
+                  onTap: () => handleCopy(),
                   child: Icon(Icons.file_copy, size: 30, color: Constants.blue),
                 )
               ],

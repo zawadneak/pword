@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:password_strength/password_strength.dart';
 import 'dart:math';
+import 'package:get/get.dart';
+import '../controllers/safe.dart';
+import '../models/safeItem.dart';
 import '../constants/colors.dart';
 import '../constants/passwordChars.dart';
 import '../widgets/checkBox.dart';
 import '../widgets/generalButton.dart';
 import '../widgets/Alert.dart';
+import '../widgets/StoreAlert.dart';
 
 import './safe.dart';
 
@@ -24,10 +28,14 @@ class PasswordState extends State<Password> {
     CheckBoxModel(text: "Use noun"),
   ];
 
+  final SafeController controller = Get.put(SafeController());
+
   double passwordLength = 10;
   double strength = 0.3;
   bool isGenerated = false;
   String currentPassword = "";
+
+  bool isSaving = false;
   String description = "";
 
   @override
@@ -76,6 +84,8 @@ class PasswordState extends State<Password> {
         final noun = PasswordChars.randomNouns[index];
         String nounPassword;
         nounPassword = generatedPassword.replaceRange(0, noun.length, noun);
+        nounPassword =
+            "${nounPassword[0].toUpperCase()}${nounPassword.substring(1)}";
 
         final estimateStrenght = estimatePasswordStrength(nounPassword);
 
@@ -110,9 +120,29 @@ class PasswordState extends State<Password> {
           context, "Password copied to clipboard! Thank you for using pword.");
     }
 
-    void handleSave() {
+    void handleTextChange(String text) {
+      setState(() {
+        description = text;
+      });
+    }
+
+    void handleStorePassword() {
+      controller.push(SafeItem(currentPassword, description));
       Navigator.pushNamed(context, '/safe',
           arguments: SafeItem(currentPassword, description));
+    }
+
+    void handleSave() {
+      StoreAlert().alert(context, "Store your password", handleTextChange,
+          handleStorePassword);
+    }
+
+    void handleReset() {
+      setState(() {
+        isGenerated = false;
+        strength = 0.3;
+        currentPassword = "";
+      });
     }
 
     return Scaffold(
@@ -207,7 +237,14 @@ class PasswordState extends State<Password> {
                         SizedBox(height: 10),
                         GeneralButton("Copy", handleCopy),
                         SizedBox(height: 10),
-                        GeneralButton("Save", handleSave)
+                        GeneralButton("Save", handleSave),
+                        SizedBox(height: 20),
+                        FlatButton(
+                            onPressed: handleReset,
+                            child: Text(
+                              "Generate new password",
+                              style: TextStyle(fontFamily: "Montserrat"),
+                            ))
                       ])));
   }
 }
