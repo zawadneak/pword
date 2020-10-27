@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import './pages/home.dart';
 import './pages/password.dart';
 import './pages/safe.dart';
 import './pages/settings.dart';
 
-void main() {
+import './controllers/safe.dart';
+
+Future main() async {
+  await DotEnv().load('.env');
+
   runApp(App());
 }
 

@@ -9,6 +9,11 @@
 .history
 .svn/
 
+
+/lib/controllers/*
+
+.env
+
 # IntelliJ related
 *.iml
 *.ipr
