@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:flutter_string_encryption/flutter_string_encryption.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -10,8 +9,6 @@ class SafeController extends GetxController {
   static SafeController get to => Get.find();
 
   List<SafeItem> passwords = [];
-
-  final cryptor = new PlatformStringCryptor();
 
   final encryptKey = DotEnv().env['ENCRYPT_KEY'];
 
