@@ -27,16 +27,13 @@ class SafeController extends GetxController {
   }
 
   Future storePasswords() async {
+    final encoder = Base64Codec();
+    final encryptionKey = DotEnv().env['ENCRYPTION_KEY'];
     final file = await _localFile;
 
     final stringlified = jsonEncode(passwords);
     final encrypt = utf8.encode(stringlified);
-
-    final encoder = Base64Codec();
-
     final encodedPasswords = encoder.encode(encrypt);
-
-    final encryptionKey = DotEnv().env['ENCRYPTION_KEY'];
 
     final encryptedPasswords = '$encryptionKey$encodedPasswords';
 
@@ -49,17 +46,14 @@ class SafeController extends GetxController {
   }
 
   Future loadData() async {
-    print(passwords.isEmpty);
     if (passwords.isNotEmpty) {
       return 1;
     }
     print('Loading');
     try {
-      final file = await _localFile;
-
       final encoder = Base64Codec();
-
       final encryptionLength = DotEnv().env['ENCRYPTION_LENGTH'];
+      final file = await _localFile;
 
       var decodingString = await file.readAsString();
 
@@ -74,8 +68,6 @@ class SafeController extends GetxController {
 
       await map.forEach(
           (el) => passwords.add(SafeItem(el['password'], el['description'])));
-
-      print(passwords);
     } catch (e) {
       print(e);
     }
@@ -88,10 +80,12 @@ class SafeController extends GetxController {
 
   void deleteItem(int index) {
     passwords.removeAt(index);
+    storePasswords();
   }
 
   void resetData() {
     passwords = [];
+    storePasswords();
   }
 
   load() => loadData();
