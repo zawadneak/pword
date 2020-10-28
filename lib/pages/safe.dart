@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../controllers/safe.dart';
 import '../widgets/safeBox.dart';
 import '../widgets/Alert.dart';
+import '../widgets/DeleteAlert.dart';
 
 class Safe extends StatefulWidget {
   @override
@@ -23,7 +24,11 @@ class SafeState extends State<Safe> {
     void handleDelete(int index) {
       controller.sub(index);
       Navigator.pushNamed(context, '/');
-      Alert().alert(context, "This password was deleted!");
+      Alert().alert(context, 'confirm_delete'.tr);
+    }
+
+    void handleConfirmDelete(int index) {
+      DeleteAlert().alert(context, 'ask_delete'.tr, () => handleDelete(index));
     }
 
     return Scaffold(
@@ -34,7 +39,7 @@ class SafeState extends State<Safe> {
         Padding(
           padding: EdgeInsets.only(top: 60),
           child: Text(
-            "Password Safe",
+            'pass_safe'.tr,
             style: TextStyle(
                 fontFamily: "OpenSans",
                 fontWeight: FontWeight.w700,
@@ -52,7 +57,7 @@ class SafeState extends State<Safe> {
                   return SafeBox(
                       item.passwords[index].description,
                       item.passwords[index].password,
-                      () => handleDelete(index));
+                      () => handleConfirmDelete(index));
                 },
               ),
             ),

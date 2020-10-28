@@ -20,6 +20,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       locale: ui.window.locale,
+      fallbackLocale: Locale('en', 'US'),
       translations: Messages(),
       theme: ThemeData(fontFamily: 'OpenSans'),
       initialRoute: '/',

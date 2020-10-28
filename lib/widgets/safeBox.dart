@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pword/constants/colors.dart';
+import 'package:get/get.dart';
 import './Alert.dart';
 
 class SafeBox extends StatefulWidget {
@@ -25,8 +26,7 @@ class SafeBoxWidget extends State<SafeBox> {
 
   void handleCopy() {
     Clipboard.setData(ClipboardData(text: widget.password));
-    Alert().alert(
-        context, "Password copied to clipboard! Thank you for using pword.");
+    Alert().alert(context, 'pass_copied'.tr);
   }
 
   @override
@@ -47,7 +47,7 @@ class SafeBoxWidget extends State<SafeBox> {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  "description",
+                  "description".tr,
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: Colors.black,
@@ -64,7 +64,7 @@ class SafeBoxWidget extends State<SafeBox> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "password",
+                  "password".tr,
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: Colors.black,

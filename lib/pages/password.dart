@@ -21,11 +21,11 @@ class Password extends StatefulWidget {
 
 class PasswordState extends State<Password> {
   final List<CheckBoxModel> options = [
-    CheckBoxModel(text: "Uppercase letters"),
-    CheckBoxModel(text: "Lowercase letters"),
-    CheckBoxModel(text: "Symbols"),
-    CheckBoxModel(text: "Numbers"),
-    CheckBoxModel(text: "Use noun"),
+    CheckBoxModel(text: 'uppercase'.tr),
+    CheckBoxModel(text: 'lowercase'.tr),
+    CheckBoxModel(text: 'symbols'.tr),
+    CheckBoxModel(text: "numbers".tr),
+    CheckBoxModel(text: "noun".tr),
   ];
 
   final SafeController controller = Get.put(SafeController());
@@ -70,8 +70,7 @@ class PasswordState extends State<Password> {
       final charArray = getCharArray();
 
       if (charArray.isEmpty ?? true) {
-        Alert().alert(context,
-            "You need to select at least one option besides use common words!");
+        Alert().alert(context, 'invalid_submit'.tr);
         return 1;
       }
       final charString = charArray.join();
@@ -116,8 +115,7 @@ class PasswordState extends State<Password> {
 
     void handleCopy() {
       Clipboard.setData(ClipboardData(text: currentPassword));
-      Alert().alert(
-          context, "Password copied to clipboard! Thank you for using pword.");
+      Alert().alert(context, 'pass_copied'.tr);
     }
 
     void handleTextChange(String text) {
@@ -133,8 +131,8 @@ class PasswordState extends State<Password> {
     }
 
     void handleSave() {
-      StoreAlert().alert(context, "Store your password", handleTextChange,
-          handleStorePassword);
+      StoreAlert().alert(
+          context, 'store_password'.tr, handleTextChange, handleStorePassword);
     }
 
     void handleReset() {
@@ -152,7 +150,7 @@ class PasswordState extends State<Password> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Generate new password",
+                        "generate_password".tr,
                         style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontWeight: FontWeight.w700,
@@ -168,7 +166,7 @@ class PasswordState extends State<Password> {
                         ),
                         height: 320.0,
                       )),
-                      Text("Password Length: $printableSliderValue",
+                      Text("pass_length".tr + " $printableSliderValue",
                           style: TextStyle(
                               fontFamily: "OpenSans", fontSize: 14.0)),
                       Slider(
@@ -183,7 +181,7 @@ class PasswordState extends State<Password> {
                               passwordLength = value;
                             });
                           }),
-                      GeneralButton("Generate", handleGenerate)
+                      GeneralButton("generate".tr, handleGenerate)
                     ],
                   )
                 : Column(
@@ -211,13 +209,13 @@ class PasswordState extends State<Password> {
                             ),
                           ),
                         ),
-                        Text('Strength'),
+                        Text('strength'.tr),
                         Text(
                           strength > 0.7
-                              ? "strong"
+                              ? "strong".tr
                               : strength > 0.5
-                                  ? "average"
-                                  : "weak",
+                                  ? "average".tr
+                                  : "weak".tr,
                           style: TextStyle(
                               fontFamily: "Montserrat",
                               color: strength > 0.7
@@ -229,20 +227,18 @@ class PasswordState extends State<Password> {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          strength < 0.7
-                              ? "To increase the score, select more\noptions at the generation menu."
-                              : "",
+                          strength < 0.7 ? "increase_score".tr : "",
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 10),
-                        GeneralButton("Copy", handleCopy),
+                        GeneralButton("copy".tr, handleCopy),
                         SizedBox(height: 10),
-                        GeneralButton("Save", handleSave),
+                        GeneralButton("save".tr, handleSave),
                         SizedBox(height: 20),
                         FlatButton(
                             onPressed: handleReset,
                             child: Text(
-                              "Generate new password",
+                              "generate_password".tr,
                               style: TextStyle(fontFamily: "Montserrat"),
                             ))
                       ])));

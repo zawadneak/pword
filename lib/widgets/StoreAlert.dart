@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import './generalButton.dart';
 
 class StoreAlert {
@@ -26,7 +27,7 @@ class StoreAlert {
                       SizedBox(
                         height: 10,
                       ),
-                      GeneralButton("Confirm", handleStore),
+                      GeneralButton("confirm".tr, handleStore),
                     ],
                   ))
             ],

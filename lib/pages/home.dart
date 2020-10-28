@@ -42,19 +42,19 @@ class MainState extends State<Main> {
                 Column(
                   children: [
                     Text(
-                      "Welcome to PWORD",
+                      'welcome'.tr,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 21.0,
                       ),
                     ),
-                    Text("your password manager & generator"),
+                    Text('welcome_sub'.tr),
                   ],
                 ),
                 Column(
                   children: [
-                    HomeButton("Generator", "green", handleGenerator),
-                    HomeButton("Safe", "blue", handleSafe),
+                    HomeButton('generator'.tr, "green", handleGenerator),
+                    HomeButton('safe'.tr, "blue", handleSafe),
                   ],
                 ),
                 Column(
@@ -63,7 +63,7 @@ class MainState extends State<Main> {
                       child: RaisedButton(
                         onPressed: handleSettings,
                         child: Text(
-                          "Settings",
+                          'settings'.tr,
                         ),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
