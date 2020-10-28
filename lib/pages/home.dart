@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import '../controllers/safe.dart';
 import '../widgets/homeButton.dart';
 
-class Main extends StatelessWidget {
+class Main extends StatefulWidget {
+  @override
+  MainState createState() => MainState();
+}
+
+class MainState extends State<Main> {
+  final SafeController controller = Get.put(SafeController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.load();
+  }
+
   @override
   Widget build(BuildContext context) {
     void handleGenerator() {
@@ -63,11 +78,3 @@ class Main extends StatelessWidget {
             ))));
   }
 }
-
-// class Test extends StatefulWidget{
-//   @override
-//   State<StatefulWidget> createState() {
-//     // TODO: implement createState
-//     throw UnimplementedError();
-//   }
-// }

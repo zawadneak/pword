@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:ui' as ui;
 import './pages/home.dart';
 import './pages/password.dart';
 import './pages/safe.dart';
 import './pages/settings.dart';
-
-import './controllers/safe.dart';
+import './locales/index.dart';
 
 Future main() async {
   await DotEnv().load('.env');
@@ -19,6 +19,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      locale: ui.window.locale,
+      translations: Messages(),
       theme: ThemeData(fontFamily: 'OpenSans'),
       initialRoute: '/',
       routes: {

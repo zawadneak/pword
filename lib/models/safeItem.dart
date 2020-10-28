@@ -15,21 +15,3 @@ class SafeItem {
     };
   }
 }
-
-class EncryptedSafeItem {
-  final password;
-  final String description;
-
-  EncryptedSafeItem(this.password, this.description);
-
-  EncryptedSafeItem.fromJson(Map<String, dynamic> json)
-      : password = json['password'],
-        description = json['description'];
-
-  Map<String, dynamic> toJson() {
-    return {
-      'password': password,
-      'description': description,
-    };
-  }
-}

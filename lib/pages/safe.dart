@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../controllers/safe.dart';
 import '../widgets/safeBox.dart';
 import '../widgets/Alert.dart';
-import '../models/safeItem.dart';
 
 class Safe extends StatefulWidget {
   @override

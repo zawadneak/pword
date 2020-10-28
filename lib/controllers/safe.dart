@@ -9,11 +9,11 @@ import '../models/safeItem.dart';
 class SafeController extends GetxController {
   static SafeController get to => Get.find();
 
+  List<SafeItem> passwords = [];
+
   final cryptor = new PlatformStringCryptor();
 
   final encryptKey = DotEnv().env['ENCRYPT_KEY'];
-
-  List<SafeItem> passwords = [];
 
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
@@ -26,7 +26,7 @@ class SafeController extends GetxController {
     return File('$path/pword.txt');
   }
 
-  Future<File> storePasswords() async {
+  Future storePasswords() async {
     final file = await _localFile;
 
     final stringlified = jsonEncode(passwords);
@@ -39,12 +39,20 @@ class SafeController extends GetxController {
     final encryptionKey = DotEnv().env['ENCRYPTION_KEY'];
 
     final encryptedPasswords = '$encryptionKey$encodedPasswords';
-    print(encryptedPasswords);
 
-    return await file.writeAsString('$encryptedPasswords');
+    try {
+      await file.writeAsString('$encryptedPasswords');
+      print('saved');
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future loadData() async {
+    print(passwords.isEmpty);
+    if (passwords.isNotEmpty) {
+      return 1;
+    }
     print('Loading');
     try {
       final file = await _localFile;
@@ -60,14 +68,16 @@ class SafeController extends GetxController {
 
       final base64 = encoder.decode(passwordString);
 
-      final utf = utf8.decode(base64);
+      final String utf = utf8.decode(base64);
 
-      final array = jsonDecode(utf);
+      List map = jsonDecode(utf);
 
-      await array.forEach((e) => passwords.add(SafeItem.fromJson(e)));
+      await map.forEach(
+          (el) => passwords.add(SafeItem(el['password'], el['description'])));
+
+      print(passwords);
     } catch (e) {
       print(e);
-      return 0;
     }
   }
 
@@ -83,6 +93,8 @@ class SafeController extends GetxController {
   void resetData() {
     passwords = [];
   }
+
+  load() => loadData();
 
   push(SafeItem payload) => storePassword(payload);
 
