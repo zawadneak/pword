@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'generalButton.dart';
+import 'GeneralButton.dart';
 
 class DeleteAlert {
   Future<void> alert(

@@ -34,7 +34,7 @@ class HomeButton extends StatelessWidget {
                     this.colorType == 'blue'
                         ? 'lib/assets/img/safe.jpg'
                         : 'lib/assets/img/gear.jpg',
-                    width: 200.0,
+                    width: 180.0,
                   ),
                 ],
               ),

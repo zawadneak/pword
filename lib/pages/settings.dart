@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../widgets/Alert.dart';
+import '../widgets/SecondaryButton.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -63,7 +64,7 @@ class SettingsState extends State<Settings> {
             width: 200,
           ),
         ),
-        RaisedButton(onPressed: handleGoBack, child: Text('back'.tr)),
+        SecondaryButton('back'.tr, handleGoBack),
       ],
     )));
   }

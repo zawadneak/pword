@@ -7,12 +7,11 @@ import '../controllers/safe.dart';
 import '../models/safeItem.dart';
 import '../constants/colors.dart';
 import '../constants/passwordChars.dart';
-import '../widgets/checkBox.dart';
-import '../widgets/generalButton.dart';
+import '../widgets/CheckBox.dart';
+import '../widgets/GeneralButton.dart';
 import '../widgets/Alert.dart';
 import '../widgets/StoreAlert.dart';
-
-import './safe.dart';
+import '../widgets/SecondaryButton.dart';
 
 class Password extends StatefulWidget {
   @override
@@ -182,8 +181,7 @@ class PasswordState extends State<Password> {
                             });
                           }),
                       GeneralButton("generate".tr, handleGenerate),
-                      RaisedButton(
-                          onPressed: handleGoBack, child: Text('back'.tr)),
+                      SecondaryButton('back'.tr, handleGoBack),
                     ],
                   )
                 : Column(

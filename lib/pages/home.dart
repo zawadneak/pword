@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../controllers/safe.dart';
-import '../widgets/homeButton.dart';
+import '../widgets/HomeButton.dart';
 
 class Main extends StatefulWidget {
   @override

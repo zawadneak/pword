@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/safe.dart';
-import '../widgets/safeBox.dart';
+import '../widgets/SafeBox.dart';
 import '../widgets/Alert.dart';
 import '../widgets/DeleteAlert.dart';
+import '../widgets/SecondaryButton.dart';
 
 class Safe extends StatefulWidget {
   @override
@@ -46,7 +47,7 @@ class SafeState extends State<Safe> {
                 fontSize: 21.0),
           ),
         ),
-        RaisedButton(onPressed: handleGoBack, child: Text('back'.tr)),
+        SecondaryButton('back'.tr, handleGoBack),
         Container(
             child: Expanded(
           flex: 1,
