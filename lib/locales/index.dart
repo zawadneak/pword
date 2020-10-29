@@ -38,6 +38,10 @@ class Messages extends Translations {
           'ask_delete': 'Are you sure you want to delete this password?',
           'input_description': 'Description',
           'back': 'Go back',
+          'icon': "Home icons made by Freepik at flaticon.com",
+          'supporters': "Supporters",
+          'rate': 'Rate us',
+          'developer': 'The developer',
         },
         'pt_BR': {
           'welcome': 'Bem vindo ao PWORD',
@@ -73,7 +77,11 @@ class Messages extends Translations {
           'confirm': 'Confirmar',
           'ask_delete': 'Tem certeza que quer deletar essa senha?',
           'input_description': 'Insira uma descrição',
-          'back': 'Voltar'
+          'back': 'Voltar',
+          'icon': "Ícones do menu por Freepik em flaticon.com",
+          'supporters': "Contribuidores",
+          'rate': 'Nos avalie',
+          'developer': 'O desenvolvedor',
         }
       };
 }
