@@ -27,7 +27,7 @@ class StoreAlert {
                       SizedBox(
                         height: 10,
                       ),
-                      GeneralButton("confirm".tr, handleStore),
+                      GeneralButton("Ok", handleStore),
                     ],
                   ))
             ],

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:password_strength/password_strength.dart';
 import 'dart:math';
+import 'dart:ui' as ui;
 import 'package:get/get.dart';
+
 import '../controllers/safe.dart';
 import '../models/safeItem.dart';
 import '../constants/colors.dart';
-import '../constants/passwordChars.dart';
+import '../constants/passwordCharsEN.dart';
+import '../constants/passwordCharsPT.dart';
 import '../widgets/CheckBox.dart';
 import '../widgets/GeneralButton.dart';
 import '../widgets/Alert.dart';
@@ -45,19 +48,22 @@ class PasswordState extends State<Password> {
 
     int printableSliderValue = passwordLength.round();
 
+    final portuguese = ui.window.locale.toLanguageTag() == 'pt';
+
     List getCharArray() {
       var charArray = [];
+
       if (options[0].checked) {
-        charArray.add(PasswordChars.uppercase);
+        charArray.add(PasswordCharsEN.uppercase);
       }
       if (options[1].checked) {
-        charArray.add(PasswordChars.lowercase);
+        charArray.add(PasswordCharsEN.lowercase);
       }
       if (options[2].checked) {
-        charArray.add(PasswordChars.symbols);
+        charArray.add(PasswordCharsEN.symbols);
       }
       if (options[3].checked) {
-        charArray.add(PasswordChars.numbers);
+        charArray.add(PasswordCharsEN.numbers);
       }
 
       return charArray;
@@ -78,8 +84,12 @@ class PasswordState extends State<Password> {
           (index) => charString[random.nextInt(charString.length)]).join();
 
       if (options[4].checked) {
-        final index = random.nextInt(PasswordChars.randomNouns.length);
-        final noun = PasswordChars.randomNouns[index];
+        final index = random.nextInt(portuguese
+            ? PasswordCharsPT.randomNouns.length
+            : PasswordCharsEN.randomNouns.length);
+        final noun = portuguese
+            ? PasswordCharsPT.randomNouns[index]
+            : PasswordCharsEN.randomNouns[index];
         String nounPassword;
         nounPassword = generatedPassword.replaceRange(0, noun.length, noun);
         nounPassword =
