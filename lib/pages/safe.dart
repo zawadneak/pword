@@ -46,6 +46,7 @@ class SafeState extends State<Safe> {
                 fontSize: 21.0),
           ),
         ),
+        RaisedButton(onPressed: handleGoBack, child: Text('back'.tr)),
         Container(
             child: Expanded(
           flex: 1,

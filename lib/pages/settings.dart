@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -14,10 +15,11 @@ class SettingsState extends State<Settings> {
 
     return Scaffold(
         body: Center(
-      child: RaisedButton(
-        onPressed: handleGoBack,
-        child: Text('Voltar'),
-      ),
-    ));
+            child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RaisedButton(onPressed: handleGoBack, child: Text('back'.tr)),
+      ],
+    )));
   }
 }

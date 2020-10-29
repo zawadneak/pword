@@ -181,7 +181,9 @@ class PasswordState extends State<Password> {
                               passwordLength = value;
                             });
                           }),
-                      GeneralButton("generate".tr, handleGenerate)
+                      GeneralButton("generate".tr, handleGenerate),
+                      RaisedButton(
+                          onPressed: handleGoBack, child: Text('back'.tr)),
                     ],
                   )
                 : Column(

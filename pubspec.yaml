@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   password_strength: ^0.1.2
-  local_auth: ^0.6.3+3
   get:
   flutter_dotenv:
   path_provider: ^1.6.22

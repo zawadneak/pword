@@ -35,7 +35,9 @@ class Messages extends Translations {
           'description': 'description',
           'password': 'password',
           'confirm': 'Confirm',
-          'ask_delete': 'Are you sure you want to delete this password?'
+          'ask_delete': 'Are you sure you want to delete this password?',
+          'input_description': 'Description',
+          'back': 'Go back',
         },
         'pt_BR': {
           'welcome': 'Bem vindo ao PWORD',
@@ -69,7 +71,9 @@ class Messages extends Translations {
           'description': 'descrição',
           'password': 'senha',
           'confirm': 'Confirmar',
-          'ask_delete': 'Tem certeza que quer deletar essa senha?'
+          'ask_delete': 'Tem certeza que quer deletar essa senha?',
+          'input_description': 'Insira uma descrição',
+          'back': 'Voltar'
         }
       };
 }

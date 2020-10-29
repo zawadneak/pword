@@ -19,7 +19,7 @@ class StoreAlert {
                         child: TextField(
                           onChanged: (text) => handleTextChange(text),
                           decoration:
-                              InputDecoration(hintText: 'Enter a description'),
+                              InputDecoration(hintText: 'input_description'.tr),
                         ),
                         height: 50,
                         width: 300,

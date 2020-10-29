@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:local_auth/local_auth.dart';
 import '../controllers/safe.dart';
-import '../controllers/auth.dart';
 import '../widgets/homeButton.dart';
 
 class Main extends StatefulWidget {
@@ -13,43 +11,9 @@ class Main extends StatefulWidget {
 
 class MainState extends State<Main> {
   final SafeController controller = Get.put(SafeController());
-  final AuthController authController = Get.put(AuthController());
-
-  final LocalAuthentication auth = LocalAuthentication();
-
-  String _authorized = 'Not Authorized';
-  bool _isAuthenticating = false;
-
-  Future<void> _authenticate() async {
-    bool authenticated = false;
-    try {
-      setState(() {
-        _isAuthenticating = true;
-        _authorized = 'Authenticating';
-      });
-      authenticated = await auth.authenticateWithBiometrics(
-          localizedReason: 'Scan your fingerprint to authenticate',
-          useErrorDialogs: true,
-          stickyAuth: true);
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Authenticating';
-      });
-    } catch (e) {
-      print(e);
-    }
-    if (!mounted) return;
-
-    final String message = authenticated ? 'Authorized' : 'Not Authorized';
-    setState(() {
-      _authorized = message;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    _authenticate();
     controller.load();
   }
 
