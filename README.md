@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  PWORD - Password safe & generator
+  PASSWORD - Password safe & generator
 </h3>
 <p align="center">
   A flutter based app for generating and storing passwords
